@@ -14,8 +14,8 @@ Private GitHubにアクセスできるアカウントで実行します。
 このMacには`tiktok_male_01`が登録済みです。
 
 ```bash
-git clone https://github.com/hidebimfgt-hub/keiyo-voice-cli.git
-cd keiyo-voice-cli
+git clone https://github.com/hidebimfgt-hub/voice-cli.git
+cd voice-cli
 ./bootstrap.sh
 source .venv/bin/activate
 cvtts list-voices

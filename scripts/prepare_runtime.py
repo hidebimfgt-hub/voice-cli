@@ -27,7 +27,7 @@ def prepare_wetext():
         path.parent.mkdir(parents=True, exist_ok=True)
         query = urllib.parse.urlencode({"Revision": entry["revision"], "FilePath": filename})
         url = f"https://modelscope.cn/api/v1/models/{lock['model_id']}/repo?{query}"
-        request = urllib.request.Request(url, headers={"User-Agent": "keiyo-voice-cli/1.0", "Cache-Control": "no-cache"})
+        request = urllib.request.Request(url, headers={"User-Agent": "voice-cli/1.0", "Cache-Control": "no-cache"})
         print(f"文字正規化データを取得: {filename}", flush=True)
         with tempfile.NamedTemporaryFile(dir=path.parent, delete=False) as temporary:
             temporary_path = Path(temporary.name)
