@@ -1,0 +1,8 @@
+.runtime/
+.venv/
+__pycache__/
+.DS_Store
+generated/
+*.egg-info/
+# Voice assets are local until their sharing status is confirmed.
+voices/*/

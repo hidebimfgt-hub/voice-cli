@@ -1,0 +1,8 @@
+{
+  "repository": "https://github.com/drmhse/tts-funaudio-cozyvoice3.git",
+  "commit": "a63acae32fc2154a5bfab4fb783f2b033e65d9e1",
+  "model_id": "FunAudioLLM/Fun-CosyVoice3-0.5B-2512",
+  "model_revision": "29e01c4e8d000f4bcd70751be16fa94bf3d85a18",
+  "python": "3.11.16",
+  "uv": "0.12.19"
+}
