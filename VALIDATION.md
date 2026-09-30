@@ -18,3 +18,5 @@ Apple M4 Pro / 24GiB / macOS 27.0。別Mac実機は未検証。
 基準WAV SHA256: `a86862d3755ff59d920b596b8a22400245c817cfb74c70a4fb1313f7e676a691`
 
 名称変更後: `voice-cli`の新しいパスで環境を再構築し、`cvtts`の一覧・音声生成・10テスト成功。生成WAVは基準とSHA256が完全一致。
+
+承認後の整理: 旧Python 3.10環境と誤参照のテスト音声だけを削除。参照ペア・成功WAVのハッシュは変更なし。`cvtts list-voices`と`cvtts doctor`成功。
