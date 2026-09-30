@@ -5,6 +5,8 @@ import json
 import subprocess
 import os
 import tempfile
+import time
+import urllib.error
 import urllib.parse
 import urllib.request
 
@@ -25,14 +27,28 @@ def prepare_wetext():
         path.parent.mkdir(parents=True, exist_ok=True)
         query = urllib.parse.urlencode({"Revision": entry["revision"], "FilePath": filename})
         url = f"https://modelscope.cn/api/v1/models/{lock['model_id']}/repo?{query}"
-        request = urllib.request.Request(url, headers={"User-Agent": "keiyo-voice-cli/1.0"})
+        request = urllib.request.Request(url, headers={"User-Agent": "keiyo-voice-cli/1.0", "Cache-Control": "no-cache"})
         print(f"文字正規化データを取得: {filename}", flush=True)
         with tempfile.NamedTemporaryFile(dir=path.parent, delete=False) as temporary:
             temporary_path = Path(temporary.name)
             try:
-                with urllib.request.urlopen(request, timeout=120) as response:
-                    for chunk in iter(lambda: response.read(1024 * 1024), b""):
-                        temporary.write(chunk)
+                for attempt in range(4):
+                    temporary.seek(0)
+                    temporary.truncate()
+                    try:
+                        with urllib.request.urlopen(request, timeout=120) as response:
+                            for chunk in iter(lambda: response.read(1024 * 1024), b""):
+                                temporary.write(chunk)
+                        break
+                    except urllib.error.HTTPError as error:
+                        if error.code not in (403, 408, 429, 500, 502, 503, 504) or attempt == 3:
+                            raise
+                    except urllib.error.URLError:
+                        if attempt == 3:
+                            raise
+                    delay = 5 * (attempt + 1)
+                    print(f"配信先の一時エラー。{delay}秒後に再試行: {filename}", flush=True)
+                    time.sleep(delay)
                 temporary.flush()
                 if hashlib.sha256(temporary_path.read_bytes()).hexdigest() != entry["sha256"]:
                     raise ValueError(f"文字正規化データが固定ハッシュと不一致: {filename}")
