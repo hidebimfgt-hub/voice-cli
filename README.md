@@ -1,4 +1,4 @@
-# keiyo-voice-cli
+# voice-cli
 
 CosyVoice 3で、登録したVoiceの声を使ってWAV/MP3を生成します。
 CodexからCLIで呼び出せます。音声の学習やAPIキーは不要です。
